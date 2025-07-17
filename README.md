@@ -1,24 +1,46 @@
-# README
+# InstaMini 📸
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Минималистичный клон Instagram, реализованный на Ruby on Rails.  
+Поддерживает регистрацию пользователей, создание постов с изображениями и комментарии.
 
-Things you may want to cover:
+## 🚀 Стек технологий
 
-* Ruby version
+- Ruby 3.x
+- Ruby on Rails 7.x
+- PostgreSQL
+- Devise (аутентификация)
+- Tailwind CSS (оформление)
+- Active Storage (загрузка изображений)
 
-* System dependencies
 
-* Configuration
+## ⚙️ Установка и запуск
 
-* Database creation
+### 1. Клонировать репозиторий
 
-* Database initialization
+git clone https://github.com/ShinMothra/Insta_Mini.git
+cd Insta_Mini
 
-* How to run the test suite
+### 2. Установить зависимости
 
-* Services (job queues, cache servers, search engines, etc.)
+bundle install
+yarn install
 
-* Deployment instructions
+### 3. Настроить базу данных
 
-* ...
+rails db:create
+rails db:migrate
+
+### 4. Запустить сервер
+
+rails server
+
+Приложение будет доступно по адресу:
+http://localhost:3000
+
+## 📂 Основные возможности
+
+* Регистрация и вход пользователей (Devise)
+* Подписки и отписки
+* Лайки
+* Создание постов с изображениями
+* Комментирование постов
