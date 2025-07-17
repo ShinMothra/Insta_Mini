@@ -1,0 +1,64 @@
+<h1>Пост</h1>
+
+<p><strong>Автор:</strong> <%= @post.user.username || @post.user.email %></p>
+<p><strong>Подпись:</strong> <%= @post.caption %></p>
+
+<% if @post.image.attached? %>
+  <%= image_tag url_for(@post.image), class: "w-full rounded-lg shadow", alt: "Фото поста" %>
+<% end %>
+
+<p><strong>Лайков:</strong> <%= @post.likes.count %></p>
+
+<% if user_signed_in? %>
+  <% if current_user.likes.exists?(post: @post) %>
+    <%= button_to "💔 Больше не нравится", post_like_path(@post), method: :delete, class: "bg-red-500 text-white px-4 py-1 rounded" %>
+  <% else %>
+    <%= button_to "❤️ Нравится", post_like_path(@post), method: :post, class: "bg-green-500 text-white px-4 py-1 rounded" %>
+  <% end %>
+<% end %>
+
+
+<% if @post.user == current_user %>
+  <div class="text-right">
+    <%= link_to "✏️ Редактировать", edit_post_path(@post), class: "text-blue-500 hover:underline" %>
+  </div>
+<% end %>
+
+<% if user_signed_in? && current_user != @user %>
+  <% if current_user.following.include?(@user) %>
+    <%= button_to "Отписаться", unfollow_user_path(@user), method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded" %>
+  <% else %>
+    <%= button_to "Подписаться", follow_user_path(@user), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+  <% end %>
+<% end %>
+
+<h2 class="text-xl font-semibold mt-6">💬 Комментарии</h2>
+
+<% @post.comments.each do |comment| %>
+  <div class="bg-gray-100 p-3 rounded my-2">
+    <p class="text-sm text-gray-800">
+      <strong><%= comment.user.email %></strong>: <%= comment.body %>
+    </p>
+
+    <p class="text-xs text-gray-500">
+      <%= comment.created_at.strftime("%d.%m.%Y %H:%M") %>
+    </p>
+
+    <% if comment.user == current_user %>
+      <div class="mt-1 flex gap-4 text-sm">
+        <%= link_to "✏️ Редактировать", edit_comment_path(comment), class: "text-blue-500 hover:underline" %>
+        <%= link_to "🗑 Удалить", comment_path(comment), method: :delete, data: { confirm: "Удалить комментарий?" }, class: "text-red-500 hover:underline" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= form_with(model: [@post, Comment.new], local: true) do |form| %>
+  <div class="mt-4">
+    <%= form.label :body, "Новый комментарий", class: "block text-gray-700 mb-1" %>
+    <%= form.text_area :body, rows: 3, class: "w-full border rounded px-3 py-2" %>
+  </div>
+  <%= form.submit "Добавить", class: "mt-2 bg-green-500 text-white px-4 py-2 rounded" %>
+<% end %>
+
+

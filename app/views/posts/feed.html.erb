@@ -1,0 +1,25 @@
+<div class="max-w-4xl mx-auto mt-10 px-4">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">📰 Лента</h1>
+
+  <% if @posts.any? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <% @posts.each do |post| %>
+        <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+          <%= link_to post_path(post) do %>
+            <% if post.image.attached? %>
+              <%= image_tag post.image.variant(resize_to_limit: [500, 500]), class: "mb-2 rounded-lg w-full object-cover" %>
+            <% end %>
+            <p class="text-gray-800 font-semibold"><%= truncate(post.caption, length: 100) %></p>
+          <% end %>
+
+          <p class="text-sm text-gray-500 mt-2">
+            👤 <%= link_to post.user.email, user_path(post.user), class: "text-blue-500 hover:underline" %>
+          </p>
+          <p class="text-xs text-gray-400"><%= post.created_at.strftime("%d.%m.%Y %H:%M") %></p>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-center text-gray-600">Ваша лента пока пуста. Подпишитесь на кого-нибудь!</p>
+  <% end %>
+</div>

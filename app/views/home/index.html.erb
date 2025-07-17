@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MiniInsta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right, #fdfbfb, #ebedee);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+        padding: 40px;
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      p {
+        font-size: 1.2em;
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      a.button {
+        text-decoration: none;
+        padding: 12px 24px;
+        margin: 8px;
+        font-size: 1em;
+        border-radius: 8px;
+        transition: 0.3s ease;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #495057;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Добро пожаловать в MiniInsta 📸</h1>
+      <p>Простой Instagram-клон на Rails + PostgreSQL</p>
+
+      <% if user_signed_in? %>
+        <%= link_to "Перейти в профиль", user_path(current_user), class: "button btn-primary" %>
+        <%= link_to "Выйти", destroy_user_session_path, method: :delete, class: "button btn-secondary" %>
+        <%= link_to "Создать пост", new_post_path, class: "button btn-primary" %>
+      <% else %>
+        <%= link_to "Войти", new_user_session_path, class: "button btn-primary" %>
+        <%= link_to "Регистрация", new_user_registration_path, class: "button btn-secondary" %>
+      <% end %>
+
+    </div>
+  </body>
+</html>

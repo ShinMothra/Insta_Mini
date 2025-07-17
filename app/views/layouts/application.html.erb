@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MiniInstagram</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", media: "all" %>
+  </head>
+
+  <body>
+    <% unless current_page?(root_path) %>
+      <nav style="background: #f8f9fa; padding: 1rem;">
+        <strong>MiniInstagram</strong>
+
+        <% if user_signed_in? %>
+          <div class="flex gap-4 p-4 bg-gray-100 text-sm">
+            <%= link_to "🏠 Главная", root_path %>
+            <%= link_to "📰 Лента", feed_path %>
+            <%= link_to "📁 Мои посты", my_posts_path %>
+            <%= link_to "👤 Профиль", user_path(current_user) %>
+            <%= link_to "🚪 Выйти", destroy_user_session_path, method: :delete %>
+          </div>
+        <% else %>
+          <div class="flex gap-4 p-4 bg-gray-100 text-sm">
+            <%= link_to "🔑 Войти", new_user_session_path %>
+            <%= link_to "📝 Регистрация", new_user_registration_path %>
+          </div>
+        <% end %>
+      </nav>
+    <% end %>
+
+    <div style="padding: 2rem;">
+      <%= yield %>
+    </div>
+  </body>
+</html>

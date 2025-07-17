@@ -1,0 +1,7 @@
+<div style="max-width: 600px; margin: 50px auto; text-align: center;">
+  <h1>Привет, <%= current_user.email %> 👋</h1>
+  <p>Добро пожаловать в твой профиль MiniInsta!</p>
+
+  <%= link_to "Вернуться на главную", root_path, class: "button btn-secondary" %>
+  <%= link_to "Редактировать профиль", edit_user_registration_path, class: "btn" %>
+</div>
